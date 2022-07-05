@@ -1,3 +1,4 @@
+import django.utils.timezone
 from django.db import models
 from datetime import date
 
@@ -5,7 +6,7 @@ class Books(models.Model):
     name = models.CharField(max_length=100)
     author = models.CharField(max_length=30)
     co_author = models.CharField(max_length=30, blank=True)
-    registration_date = models.DateField(default=date.today())
+    registration_date = models.DateField(default= django.utils.timezone.now)
     member = models.CharField(max_length=100, blank=True, null = True)
     is_loan = models.BooleanField(default=False)
     date_checkout = models.DateTimeField(blank=True, null = True)
