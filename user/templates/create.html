@@ -1,68 +1,100 @@
 {%extends 'base.html' %}
 
-{% block 'title' %} Create a new user {% endblock %}
+{% block 'title' %} New user {% endblock %}
 
 {% block 'content' %}
 
 <style>
   .divider:after,
-.divider:before {
-content: "";
-flex: 1;
-height: 1px;
-background: #eee;
-}
-.h-custom {
-height: calc(100% - 73px);
-}
-@media (max-width: 450px) {
-.h-custom {
-height: 100%;
-}
-}
+  .divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+  }
+  .h-custom {
+    height: calc(100% - 73px);
+  }
+  @media (max-width: 450px) {
+    .h-custom {
+      height: 100%;
+    }
+  }
 </style>
-<form method="POST" action="{%url 'validate_login' %}"> {% csrf_token %}
-<section class="vh-100">
-  <div class="container-fluid h-custom">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-9 col-lg-6 col-xl-5">
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-          class="img-fluid" alt="Sample image">
-      </div>
-      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form>
-
-          <!-- Name input -->
-          <div class="form-outline mb-4">
-            <input type="text" name="email" id="id_name" class="form-control form-control-lg"
-              placeholder="Enter your name" />
-            <label class="form-label" for="id_name">Email address</label>
-          </div>
-
-          <!-- Email input -->
-          <div class="form-outline mb-4">
-            <input type="email" name="email" id="id_email" class="form-control form-control-lg"
-              placeholder="Enter a valid email address" />
-            <label class="form-label" for="id_email">Email address</label>
-          </div>
-
-          <!-- Password input -->
-          <div class="form-outline mb-3">
-            <input type="password" name="password" id="id_password" class="form-control form-control-lg"
-              placeholder="Enter password" />
-            <label class="form-label" for="id_password">Password</label>
-          </div>
-
-          <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="submit" class="btn btn-primary btn-lg"
-              style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
-          </div>
-
-        </form>
-      </div>
-    </div>
+{% if status == '0' %}
+  <div class="alert alert-success" role="alert">
+    Cadastro realizado com sucesso
   </div>
+{% endif %}
+{% if status == '1' %}
+  <div class="alert alert-danger" role="alert">
+    Nome e email nao podem estar vazios!
+  </div>
+{% endif %}
 
-</section>
-</form>
+{% if status == '2' %}
+  <div class="alert alert-danger" role="alert">
+    Sua senha de ter pelo menos 8 caracteres
+  </div>
+{% endif %}
+
+{% if status == '3' %}
+  <div class="alert alert-danger" role="alert">
+    Usuario ja existe no sistema!
+  </div>
+{% endif %}
+
+{% if status == '4' %}
+  <div class="alert alert-danger" role="alert">
+    Erro interno do sistema
+  </div>
+{% endif %}
+<div class="container">
+
+    <section class="vh-100">
+      <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-md-9 col-lg-6 col-xl-5">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+              class="img-fluid" alt="Sample image">
+          </div>
+          <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <h2>Register</h2>
+            <form method="POST" action="{% url 'valida_cadastro' %}"> {% csrf_token %}
+
+              <!-- Name input -->
+              <div class="form-outline mb-4">
+                <input type="text" name="name" id="id_name" class="form-control form-control-lg"
+                  placeholder="Enter your name" />
+                <label class="form-label" for="id_name">First name</label>
+              </div>
+
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <input type="email" name="email" id="id_email" class="form-control form-control-lg"
+                  placeholder="Enter a valid email address" />
+                <label class="form-label" for="id_email">Email address</label>
+              </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-3">
+                <input type="password" name="password" id="id_password" class="form-control form-control-lg"
+                  placeholder="Enter password" />
+                <label class="form-label" for="id_password">Password</label>
+              </div>
+
+              <div class="text-center text-lg-start mt-4 pt-2">
+                <input type="submit" class="btn btn-primary btn-lg"
+                  style="padding-left: 2.5rem; padding-right: 2.5rem;" value="Register"></input>
+                  <a href="{% url 'login' %}" class="btn btn-warning btn-lg"
+                  style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</a>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+  </div>
  {% endblock %}
