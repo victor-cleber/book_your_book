@@ -78,10 +78,15 @@ def valida_login(request):
             return redirect('/auth/login/?status=3')
         elif len(user) == 1:
             # return redirect('/auth/login/?status=0')
-            # request.session['user'] = user[0].id
-            return redirect('/book/home')
+            request.session['user'] = user[0].id
+            return redirect(f'/book/home/?id_user={user[0].id}')
         elif len(user > 1):
             raise Exception('mais de um usuario no bd')
     except Exception as e:
         print(e)
         return redirect('/auth/login/?status=4')
+
+
+def logout(request):
+    request.session.flush()
+    return redirect('/auth/login')

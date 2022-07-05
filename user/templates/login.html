@@ -21,20 +21,15 @@ height: 100%;
 }
 </style>
 
-{% if status == '0' %}
-  <div class="alert alert-success" role="alert">
-    Login realizado com sucesso
-  </div>
-{% endif %}
 {% if status == '1' %}
   <div class="alert alert-danger" role="alert">
-    Email nao pode estar vazio!
+    Email ou senha invalido pode estar vazio!
   </div>
 {% endif %}
 
 {% if status == '2' %}
   <div class="alert alert-danger" role="alert">
-    Sua senha de ter pelo menos 8 caracteres
+    Faca login antes de tentar acessar o sistema
   </div>
 {% endif %}
 
